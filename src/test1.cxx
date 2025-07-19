@@ -11,11 +11,11 @@ int main()
     std::println("Contains {}.", keys[0]);
   else
     std::println("Doesn't contain {}.", keys[0]);
-  cout << endl;
+
   if (trieObj.contains(keys[1]))
     std::println("Contains {}.", keys[1]);
   else
     std::println("Doesn't contain {}.", keys[1]);
-  cout << endl;
-  cout << "End of actions!\n";
+
+  std::println("End of actions!");
 }
