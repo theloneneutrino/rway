@@ -1,5 +1,5 @@
 #include <print>
-#include "rwaytrie.h"
+#include "rwaytrie.hxx"
 
 int main()
 {
