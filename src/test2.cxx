@@ -1,5 +1,5 @@
 #include <iostream>
-#include "rwaytrie.h"
+#include "rwaytrie.hxx"
 
 using std::cout;
 using std::endl;

@@ -22,7 +22,7 @@ public:
   ~RWayTrie();
   void insert(const char * key, int val);
   bool contains(const char * key);
-  int get(const char * key);
+  uint64_t get(const char * key);
   void insertOrIncrement(const char * key);
 };
 
