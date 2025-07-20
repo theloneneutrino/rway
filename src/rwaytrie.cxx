@@ -27,7 +27,7 @@ RWayTrie::~RWayTrie()
 
 void RWayTrie::insert(const char * key, int val)
 {
-  // TODO: implement this
+  // TODO: implement this function
 }
 
 bool RWayTrie::contains(const char * key)
