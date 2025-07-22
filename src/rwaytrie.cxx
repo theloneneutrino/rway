@@ -58,7 +58,7 @@ void RWayTrie::insert(const char * key, int val)
   Node * tmpnode = root;
   const char * a = &key[0];
 
-  while (a != 0)
+  while (*a != 0)
   {
     if (tmpnode->getNext(*a) == nullptr) /* if the node doesn't exist, create it */
       tmpnode->createNext(*a);
@@ -74,7 +74,7 @@ bool RWayTrie::contains(const char * key)
   Node * tmpnode = root;
   const char * a = &key[0];
 
-  while (a != 0)
+  while (*a != 0)
   {
     if (tmpnode->getNext(*a) == nullptr)
       return false;
@@ -91,7 +91,7 @@ uint64_t RWayTrie::get(const char * key)
   Node * tmpnode = root;
   const char * a = &key[0];
 
-  while (a != 0)
+  while (*a != 0)
   {
     if (tmpnode->getNext(*a) == nullptr)
       return 0;
