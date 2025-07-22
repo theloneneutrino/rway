@@ -5,13 +5,13 @@ set(SOURCES
 )
 
 # Create main executable
-add_executable(main ${SOURCES})
+add_executable(Main ${SOURCES})
 
 # Create test executables
-add_executable(test1 rwaytrie.cxx test1.cxx)
-add_executable(test2 rwaytrie.cxx test2.cxx)
+add_executable(Test1 rwaytrie.cxx test1.cxx)
+add_executable(Test2 rwaytrie.cxx test2.cxx)
 
 # Include directories
-target_include_directories(main PRIVATE ${CMAKE_SOURCE_DIR})
-target_include_directories(test1 PRIVATE ${CMAKE_SOURCE_DIR})
-target_include_directories(test2 PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(Main PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(Test1 PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(Test2 PRIVATE ${CMAKE_SOURCE_DIR})

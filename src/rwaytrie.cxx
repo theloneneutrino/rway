@@ -1,68 +1,123 @@
-#include "rwaytrie.h"
-#include <functional>
+#include "rwaytrie.hxx"
 
-using namespace std;
+/* ┌────────────────────────────────────────────────┐
+ * │ The following functions are for the Node class │
+ * └────────────────────────────────────────────────┘ */
 
-Node::Node() : value(0) {
-    for (int i = 0; i < SIZE_OF_NODE_ARRAY; i++) {
-        next[i] = nullptr;
-    }
+Node::Node(int value) : value(value) {
+  for (int i = 0; i < ALPHABET_SIZE; i++) {
+     next[i] = nullptr;
+  }
 }
 
-RWayTrie::RWayTrie() : root(nullptr) {}
-
-RWayTrie::~RWayTrie() {
-    // Helper function to recursively delete nodes
-    function<void(Node*)> deleteNode = [&](Node* node) {
-        if (node == nullptr) return;
-        for (int i = 0; i < Node::SIZE_OF_NODE_ARRAY; i++) {
-            if (node->next[i] != nullptr) {
-                deleteNode(node->next[i]);
-            }
-        }
-        delete node;
-        };
-    deleteNode(root);
+Node::~Node(){
+  for (int i = 0; i < ALPHABET_SIZE; i++) {
+     if (next[i] != nullptr)
+       delete next[i];
+  }
 }
 
-void RWayTrie::insert(const string& key, int val) {
-    root = insert(root, key, val, 0);
+Node * Node::getNext(char a) const
+{
+  return this->next[uint8_t(a)];
+}
+void Node::createNext(char a)
+{
+  this->next[uint8_t(a)] = new Node();
 }
 
-Node* RWayTrie::insert(Node* x, const string& key, int val, int d) {
-    if (x == nullptr) {
-        x = new Node();
-    }
-
-    if (d == key.length()) {
-        x->value = val;
-        return x;
-    }
-
-    unsigned char c = key[d];
-    x->next[c] = insert(x->next[c], key, val, d + 1);
-    return x;
+void Node::increment()
+{
+  this->value++;
 }
 
-bool RWayTrie::contains(const string& key) {
-    Node* node = get(root, key, 0);
-    return node != nullptr && node->value != 0;
+void Node::setVal(uint64_t value)
+{
+  this->value = value;
 }
 
-int RWayTrie::get(const string& key) {
-    Node* node = get(root, key, 0);
-    if (node == nullptr) return 0;
-    return node->value;
+uint64_t Node::getVal() const
+{
+  return this->value;
 }
 
-Node* RWayTrie::get(Node* x, const string& key, int d) {
-    if (x == nullptr) return nullptr;
-    if (d == key.length()) return x;
-    unsigned char c = key[d];
-    return get(x->next[c], key, d + 1);
+/* ┌────────────────────────────────────────────────────┐
+ * │ The following functions are for the RWayTrie class │
+ * └────────────────────────────────────────────────────┘ */
+
+RWayTrie::RWayTrie()
+{
+  root = new Node();
 }
 
-void RWayTrie::insertOrIncrement(const string& key) {
-    int currentValue = get(key);
-    insert(key, currentValue + 1);
+
+RWayTrie::~RWayTrie()
+{
+  delete root;
+}
+
+void RWayTrie::insert(const char * key)
+{
+  Node * tmpnode = root;
+  const char * a = &key[0];
+
+  while (*a != 0)
+  {
+    if (tmpnode->getNext(*a) == nullptr) /* if the node doesn't exist, create it */
+      tmpnode->createNext(*a);
+
+    tmpnode = tmpnode->getNext(*a);
+    a += sizeof(char);
+  }
+  tmpnode->increment(); /* At the end of the chain, increment val */
+}
+
+void RWayTrie::insert(const char * key, uint64_t value)
+{
+  Node * tmpnode = root;
+  const char * a = &key[0];
+
+  while (*a != 0)
+  {
+    if (tmpnode->getNext(*a) == nullptr) /* if the node doesn't exist, create it */
+      tmpnode->createNext(*a);
+
+    tmpnode = tmpnode->getNext(*a);
+    a += sizeof(char);
+  }
+  tmpnode->setVal(value); /* At the end of the chain, set val */
+}
+
+bool RWayTrie::contains(const char * key)
+{
+  Node * tmpnode = root;
+  const char * a = &key[0];
+
+  while (*a != 0)
+  {
+    if (tmpnode->getNext(*a) == nullptr)
+      return false;
+    else
+      tmpnode = tmpnode->getNext(*a);
+
+    a += sizeof(char);
+  }
+  return tmpnode->getVal() != 0;
+}
+
+uint64_t RWayTrie::get(const char * key)
+{
+  Node * tmpnode = root;
+  const char * a = &key[0];
+
+  while (*a != 0)
+  {
+    if (tmpnode->getNext(*a) == nullptr)
+      return 0;
+    else
+      tmpnode = tmpnode->getNext(*a);
+
+    a += sizeof(char);
+  }
+  return tmpnode->getVal();
 }

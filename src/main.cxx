@@ -2,7 +2,7 @@
 #include <string>
 #include <sstream>
 #include <limits>
-#include "rwaytrie.h"
+#include "rwaytrie.hxx"
 #include "PG&E.h"
 
 using namespace std;
@@ -63,7 +63,7 @@ void testQ2() {
 
         // Insert or increment each word in the trie
         if (!cleanedWord.empty()) {
-            trieObj.insertOrIncrement(cleanedWord);
+            trieObj.insert(cleanedWord.c_str());
         }
     }
 
