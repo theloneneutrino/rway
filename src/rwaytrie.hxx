@@ -18,19 +18,19 @@ public:
   Node * getNext(char) const;
   void createNext(char);
 
-  /* These functions modify the value of value in the node */
+  /* These functions modify and retrieve the value of value in the node */
   void increment();
+  void setVal(uint64_t);
   uint64_t getVal() const;
 };
 
 class RWayTrie {
   Node* root;
-  Node* get(Node* x, const char * key, int d);
-  Node* insert(Node* x, const char * key, int val, int d);
 public:
   RWayTrie();
   ~RWayTrie();
-  void insert(const char * key, int val);
+  void insert(const char * key);
+  void insert(const char * key, uint64_t val);
   bool contains(const char * key);
   uint64_t get(const char * key);
 };

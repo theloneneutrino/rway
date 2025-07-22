@@ -1,8 +1,17 @@
-# Add source to this project's executable.
-add_library(rwaytrie SHARED "rwaytrie.cxx")
+# Source files
+set(SOURCES
+    rwaytrie.cxx
+    main.cxx
+)
 
-add_executable(Test1 "test1.cxx")
-add_executable(Test2 "test2.cxx")
+# Create main executable
+add_executable(Main ${SOURCES})
 
-target_link_libraries(Test1 PUBLIC rwaytrie)
-target_link_libraries(Test2 PUBLIC rwaytrie)
+# Create test executables
+add_executable(Test1 rwaytrie.cxx test1.cxx)
+add_executable(Test2 rwaytrie.cxx test2.cxx)
+
+# Include directories
+target_include_directories(Main PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(Test1 PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(Test2 PRIVATE ${CMAKE_SOURCE_DIR})
