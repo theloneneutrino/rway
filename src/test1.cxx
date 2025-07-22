@@ -14,9 +14,9 @@ int main()
     std::println("Doesn't contain {}{}{}.", ANSI::RED, keys[0], ANSI::RESET);
 
   if (trieObj.contains(keys[1]))
-    std::println("Contains {}.", keys[1]);
+    std::println("Contains {}{}{}.", ANSI::GREEN, keys[1], ANSI::RESET);
   else
-    std::println("Doesn't contain {}.", keys[1]);
+    std::println("Doesn't contain {}{}{}.", ANSI::RED, keys[1], ANSI::RESET);
 
   std::println("End of actions!");
 }
